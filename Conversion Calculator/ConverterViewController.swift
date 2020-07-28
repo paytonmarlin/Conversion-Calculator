@@ -16,11 +16,7 @@ class ConverterViewController: UIViewController {
     var currentConverter = 0
     
     // Create function to display the number shown when user taps on a number
-    @IBAction func numbers(_ sender: UIButton)
-    {
-        inputDisplay.text = inputDisplay.text! + String(sender.tag-1)
-        updateTextField()
-    }
+    
     
     @IBOutlet weak var outputDisplay: UITextField!  //Created action to call for output
     
@@ -36,6 +32,25 @@ class ConverterViewController: UIViewController {
     @IBAction func converterTap(_ sender: Any)
     {
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func flipSign(_ sender: Any) {
+        if let text = inputDisplay.text,
+            var inputAsDouble = Double(text) {
+            inputAsDouble *= -1
+            inputDisplay.text = "\(inputAsDouble)"
+            updateTextField()
+        } else {
+            inputDisplay.text = "-"
+            outputDisplay.text = "-"
+        }
+    }
+    
+    
+    @IBAction func numberButton(_ sender: UIButton) {
+        inputDisplay.text?.append(sender.currentTitle!)
+        updateTextField()
     }
     
     // Create a dictionary form the struct 'Converter' for all of the conversions
@@ -103,7 +118,7 @@ class ConverterViewController: UIViewController {
                 default:
                     return
             }
-    
+    outputDisplay.text = "\(output)"
 
     /*
     // MARK: - Navigation
